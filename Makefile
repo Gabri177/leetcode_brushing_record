@@ -8,6 +8,16 @@ SUBFOLDER := $(word 2, $(MAKECMDGOALS))
 SUB_OUTPUT := $(wildcard */output */*.gch)
 
 .PHONY: py cpp
+
+new:
+	@echo "Creating new folder $(SUBFOLDER)..."
+	@mkdir $(SUBFOLDER)
+	@touch $(SUBFOLDER)/solve.py
+	@touch $(SUBFOLDER)/main.cpp
+	@printf "#include \"./solve.hpp\"\nint main() {\n\tSolution s;\n\treturn 0;\n}" > $(SUBFOLDER)/main.cpp
+	@printf "#include<iostream>\n#include<vector>\n#include<string>\n#include<algorithm>\n#include<numeric>\nusing namespace std;\n" > $(SUBFOLDER)/solve.hpp
+	@echo "Created new folder $(SUBFOLDER) with solve.py , solve.hpp and main.cpp"
+
 py:
 	@if [ -e $(SUBFOLDER)/solve.py ]; then \
 		echo "Compiling Python files in folder $(SUBFOLDER)..."; \
