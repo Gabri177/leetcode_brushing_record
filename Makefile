@@ -12,16 +12,16 @@ SUB_OUTPUT := $(wildcard */output */*.gch)
 new:
 	@echo "Creating new folder $(SUBFOLDER)..."
 	@mkdir $(SUBFOLDER)
-	@touch $(SUBFOLDER)/solve.py
-	@touch $(SUBFOLDER)/main.cpp
-	@printf "#include \"./solve.hpp\"\nint main() {\n\tSolution s;\n\treturn 0;\n}" > $(SUBFOLDER)/main.cpp
-	@printf "#include<iostream>\n#include<vector>\n#include<string>\n#include<algorithm>\n#include<numeric>\nusing namespace std;\n" > $(SUBFOLDER)/solve.hpp
+	@printf "class Solution(object):\n\t" > $(SUBFOLDER)/solve.py
+	@printf "#include \"./solve.hpp\"\n\n\nint main() {\n\tSolution s;\n\treturn 0;\n}" > $(SUBFOLDER)/main.cpp
+	@printf "#include<iostream>\n#include<vector>\n#include<string>\n#include<algorithm>\n#include<numeric>\nusing namespace std;\n\nclass Solution {\npublic:\n\n\n};" > $(SUBFOLDER)/solve.hpp
 	@echo "Created new folder $(SUBFOLDER) with solve.py , solve.hpp and main.cpp"
 
 py:
 	@if [ -e $(SUBFOLDER)/solve.py ]; then \
 		echo "Compiling Python files in folder $(SUBFOLDER)..."; \
 		python3 ./$(SUBFOLDER)/solve.py; \
+		echo "Compiled Python files in $(SUBFOLDER)"; \
 	else \
 		echo "No Python file found in $(SUBFOLDER)"; \
 	fi
@@ -33,6 +33,7 @@ cpp:
 		$(CPP) $(FLAG_CPP) $(CPP_STANDARD11) $(SUBFOLDER)/main.cpp -o $(SUBFOLDER)/output; \
 		echo "Compiled C++ files in $(SUBFOLDER) to $(SUBFOLDER)/output"; \
 		./$(SUBFOLDER)/output; \
+		echo "Executed $(SUBFOLDER)/output"; \
 	else \
 		echo "No C++ file found in $(SUBFOLDER)"; \
 	fi
